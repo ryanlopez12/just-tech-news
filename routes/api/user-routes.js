@@ -70,25 +70,7 @@ router.post('/', (req, res) => {
     });
 });
 
-//POST /api/users/1
-router.post('/:id', (req, res) => {
-    User.update(req.body, {
-        where: {
-            id: req.params.id
-        }
-    })
-    .then(dbUserData => {
-        if (!dbUserData[0]) {
-            res.status(404).json({ message: 'No user found with this id' });
-            return;
-        }
-        res.json(dbUserData);
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-});
+
 
 router.post('/login', (req, res) => {
     User.findOne({
@@ -110,6 +92,27 @@ router.post('/login', (req, res) => {
     });
 
 });
+
+//POST /api/users/1
+router.post('/:id', (req, res) => {
+    User.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData[0]) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
 router.put('/:id', (req, res) => {
     User.update(req.body, {
         individualHooks: true,
